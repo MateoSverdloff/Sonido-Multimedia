@@ -10,13 +10,12 @@ export default function App() {
 
   // Reproduce un sonido local
   const reproducirSonidoLocal = async () => {
-    // Detenemos el sonido actual si está sonando
     if (sonido) {
       await sonido.stopAsync();
       await sonido.unloadAsync();
     }
     const { sound: nuevoSonido } = await Audio.Sound.createAsync(
-      require('./assets/ding.mp3') // Cambiado a sonido.mp3
+      require('./assets/ding.mp3')
     );
     setSonido(nuevoSonido);
     await nuevoSonido.playAsync();
@@ -24,28 +23,26 @@ export default function App() {
 
   // Reproduce música de fondo
   const reproducirMusicaFondo = async () => {
-    // Detenemos la música de fondo actual si está sonando
     if (sonidoFondo) {
       await sonidoFondo.stopAsync();
       await sonidoFondo.unloadAsync();
     }
     const { sound: nuevoSonidoFondo } = await Audio.Sound.createAsync(
-      require('./assets/elevator.mp3'), // Cambia esta ruta si es necesario
+      require('./assets/elevator.mp3'),
       { isLooping: true } // Reproduce en bucle
     );
     setSonidoFondo(nuevoSonidoFondo);
     await nuevoSonidoFondo.playAsync();
   };
 
-  // Reproduce música remota
+  // Reproduce música desde una URL
   const reproducirMusicaRemota = async () => {
-    // Detenemos el sonido actual si está sonando
     if (sonido) {
       await sonido.stopAsync();
       await sonido.unloadAsync();
     }
     const { sound: nuevoSonido } = await Audio.Sound.createAsync(
-      { uri: 'https://www.youtube.com/watch?v=nz-V3g6-1KQ' } // Reemplaza con tu URL remota
+      { uri: 'https://codeskulptor-demos.commondatastorage.googleapis.com/descent/gotitem.mp3' } 
     );
     setSonido(nuevoSonido);
     await nuevoSonido.playAsync();
@@ -62,17 +59,17 @@ export default function App() {
     }
   };
 
-  // Limpiar sonidos
+  // Pausar sonidos
   const detenerTodosLosSonidos = async () => {
     if (sonido) {
       await sonido.stopAsync();
       await sonido.unloadAsync();
-      setSonido(null); // Limpia el estado de sonido
+      setSonido(null);
     }
     if (sonidoFondo) {
       await sonidoFondo.stopAsync();
       await sonidoFondo.unloadAsync();
-      setSonidoFondo(null); // Limpia el estado de música de fondo
+      setSonidoFondo(null);
     }
   };
 
@@ -82,12 +79,12 @@ export default function App() {
       <Button title="Reproducir música de fondo" onPress={reproducirMusicaFondo} />
       <Button title="Reproducir música remota" onPress={reproducirMusicaRemota} />
       <Slider
-        style={styles.slider}
-        minimumValue={0}
-        maximumValue={1}
-        value={volumen}
-        onValueChange={cambiarVolumen}
-        step={0.1}
+      style={styles.slider}
+      minimumValue={0}
+      maximumValue={1}
+      value={volumen}
+      onValueChange={cambiarVolumen}
+      step={0.1}
       />
       <Button title="Detener todos los sonidos" onPress={detenerTodosLosSonidos} />
     </View>
@@ -98,6 +95,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center', 
     padding: 16,
   },
   slider: {
@@ -105,4 +103,3 @@ const styles = StyleSheet.create({
     height: 40,
   },
 });
-  
